@@ -21,11 +21,11 @@ const App = () => {
         <Route path="/" element={<Dashboard />}>
           <Route path="users" element={<UserList />} />
           <Route path="reservaciones" element={<ReservacionesList />} />
-          <Route path="agregar-reservacion" element={<ReservacionesForm />} />
+          <Route path="reservacion-form" element={<ReservacionesForm />} />
           <Route path="usuarios-hotel/:hotelId" element={<ClientesActuales />} />
           <Route path="eventos-hotel/:hotelId" element={<ListEventosPorHotel />} />
-          <Route path="agregar-evento" element={<EventoForm />} />
-          <Route path="agregar-habitacion" element={<HabitacionForm hotelId={ejemploHotelId} />} />
+          <Route path="evento-form" element={<EventoForm />} />
+          <Route path="room-form" element={<HabitacionForm hotelId={ejemploHotelId} />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

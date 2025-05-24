@@ -1,0 +1,54 @@
+.reservaciones-container {
+  background-color: #d6cfbb;
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+  color: #12361f;
+}
+
+.reservaciones-title {
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #0d2a38;
+  margin-bottom: 1.5rem;
+}
+
+.reservaciones-message {
+  text-align: center;
+  color: #256b67;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.reservaciones-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.reservacion-item {
+  background-color: white;
+  border-left: 5px solid #256b67;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.reservacion-item:hover {
+  transform: translateY(-2px);
+  border-left-color: #0eb6da;
+}
+
+.reservacion-item p {
+  margin: 0.3rem 0;
+}
+
+.reservacion-item strong {
+  color: #0d2a38;
+}

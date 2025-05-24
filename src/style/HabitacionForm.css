@@ -1,0 +1,83 @@
+.habitacion-form-container {
+  background-color: #d6cfbb;
+  padding: 2rem;
+  max-width: 600px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  color: #12361f;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.habitacion-form-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #12361f;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.habitacion-form-message {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.habitacion-form-message.success {
+  color: green;
+}
+.habitacion-form-message.error {
+  color: red;
+}
+
+.habitacion-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 2rem;
+  align-items: start;
+}
+
+.evento-form-label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #12361f;
+}
+
+.evento-form-input,
+.evento-form-textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #256b67;
+  border-radius: 8px;
+  background-color: white;
+  color: #12361f;
+}
+
+.evento-form-textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.habitacion-form > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.habitacion-form textarea {
+  grid-column: span 2;
+}
+
+.habitacion-form-button {
+  grid-column: span 2;
+  background-color: #256b67;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.habitacion-form-button:hover {
+  background-color: #12361f;
+}

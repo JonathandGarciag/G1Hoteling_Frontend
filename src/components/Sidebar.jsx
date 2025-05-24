@@ -16,7 +16,7 @@ import {
 import "../style/Sidebar.css";
 import { useAuth } from "../shared/hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
-import { useUserDetails } from "../shared/hooks/useUserDetails"; 
+import { useUserDetails } from "../shared/hooks/useUserDetails";
 import { logout } from "../shared/hooks/userLogout";
 
 const Sidebar = () => {
@@ -36,20 +36,38 @@ const Sidebar = () => {
       <ul className="menu">
         {user?.role === "CLIENT_ROLE" && (
           <>
-            <li><FaHotel /> <span>Hoteles</span></li>
-            <li><FaBed /> <span>Habitaciones</span></li>
-            <li><FaCalendarAlt /> <span>Eventos</span></li>
-            <li><FaHistory /> <span>Reservaciones</span></li>
-            <li><FaCog /> <span>Mi cuenta</span></li>
+            <li>
+              <FaHotel /> <span>Hoteles</span>
+            </li>
+            <li>
+              <FaBed /> <span>Habitaciones</span>
+            </li>
+            <li>
+              <FaCalendarAlt /> <span>Eventos</span>
+            </li>
+            <li>
+              <FaHistory /> <span>Reservaciones</span>
+            </li>
+            <li>
+              <FaCog /> <span>Mi cuenta</span>
+            </li>
           </>
         )}
 
         {user?.role === "HOTEL_ROLE" && (
           <>
-            <li><FaBook /> <span>Reservaciones</span></li>
-            <li><FaUsers /> <span>Clientes actuales</span></li>
-            <li><FaBed /> <span>Disponibilidad</span></li>
-            <li><FaFileInvoice /> <span>Facturación</span></li>
+            <li onClick={() => navigate("/reservaciones")}>
+              <FaBook /> <span>Reservaciones</span>
+            </li>
+            <li onClick={() => navigate(`/usuarios-hotel/${user.hotelId}`)}>
+              <FaUsers /> <span>Clientes actuales</span>
+            </li>
+            <li onClick={() => navigate("/room-form")}>
+              <FaBed /> <span>Disponibilidad</span>
+            </li>
+            <li onClick={() => navigate(`/eventos-hotel/${user.hotelId}`)}>
+              <FaFileInvoice /> <span>Facturación</span>
+            </li>
           </>
         )}
 
@@ -83,10 +101,10 @@ const Sidebar = () => {
         </div>
 
         {!collapsed && (
-        <button className="logout-button" onClick={logout}>
-          ⏎ Cerrar sesión
-        </button>
-      )}  
+          <button className="logout-button" onClick={logout}>
+            ⏎ Cerrar sesión
+          </button>
+        )}
       </div>
     </div>
   );

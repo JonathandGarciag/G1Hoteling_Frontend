@@ -1,6 +1,8 @@
-// components/HabitacionForm.jsx
 import React, { useState } from "react";
+
 import { useHabitaciones } from "../../shared/hooks/useHabitaciones";
+
+import '../../style/HabitacionForm.css'
 
 const HabitacionForm = ({ hotelId }) => {
   const { agregarHabitacion } = useHabitaciones();
@@ -43,50 +45,63 @@ const HabitacionForm = ({ hotelId }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow rounded">
-      <h2 className="text-xl font-bold mb-4">Registrar Habitación</h2>
-      {mensaje && <p className="text-green-600">{mensaje}</p>}
-      {error && <p className="text-red-600">{error}</p>}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="nombre"
-          value={habitacion.nombre}
-          onChange={handleChange}
-          placeholder="Nombre"
-          required
-          className="w-full border px-3 py-2 rounded"
-        />
-        <textarea
-          name="descripcion"
-          value={habitacion.descripcion}
-          onChange={handleChange}
-          placeholder="Descripción"
-          required
-          className="w-full border px-3 py-2 rounded"
-        />
-        <input
-          type="number"
-          name="capacidad"
-          value={habitacion.capacidad}
-          onChange={handleChange}
-          placeholder="Capacidad"
-          required
-          className="w-full border px-3 py-2 rounded"
-        />
-        <input
-          type="number"
-          name="precio"
-          value={habitacion.precio}
-          onChange={handleChange}
-          placeholder="Precio por noche"
-          required
-          className="w-full border px-3 py-2 rounded"
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
+    <div className="habitacion-form-container">
+      <h2 className="habitacion-form-title">Registrar Habitación</h2>
+      {mensaje && <p className="habitacion-form-message success">{mensaje}</p>}
+      {error && <p className="habitacion-form-message error">{error}</p>}
+      <form onSubmit={handleSubmit} className="habitacion-form">
+        <div>
+          <label htmlFor="nombre" className="evento-form-label">Nombre</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            value={habitacion.nombre}
+            onChange={handleChange}
+            required
+            className="evento-form-input"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="capacidad" className="evento-form-label">Capacidad</label>
+          <input
+            type="number"
+            id="capacidad"
+            name="capacidad"
+            value={habitacion.capacidad}
+            onChange={handleChange}
+            required
+            className="evento-form-input"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="precio" className="evento-form-label">Precio por noche</label>
+          <input
+            type="number"
+            id="precio"
+            name="precio"
+            value={habitacion.precio}
+            onChange={handleChange}
+            required
+            className="evento-form-input"
+          />
+        </div>
+
+        <div style={{ gridColumn: "span 2" }}>
+          <label htmlFor="descripcion" className="evento-form-label">Descripción</label>
+          <textarea
+            id="descripcion"
+            name="descripcion"
+            value={habitacion.descripcion}
+            onChange={handleChange}
+            required
+            className="evento-form-textarea"
+          />
+        </div>
+
+        <button type="submit" className="habitacion-form-button">
           Registrar
         </button>
       </form>

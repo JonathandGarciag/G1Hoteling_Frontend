@@ -1,6 +1,8 @@
-// components/ClientesActuales.jsx
 import React, { useEffect, useState } from "react";
+
 import { apiClient } from "../../service/apiClient";
+
+import "../../style/ClientesActuales.css";
 
 const ClientesActuales = ({ hotelId }) => {
   const [usuarios, setUsuarios] = useState([]);
@@ -30,22 +32,33 @@ const ClientesActuales = ({ hotelId }) => {
   if (error) return <p className="text-red-600">{error}</p>;
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Usuarios Alojados en el Hotel</h2>
+    <div className="clientes-container">
+      <h2 className="clientes-title">Usuarios Alojados en el Hotel</h2>
       {usuarios.length === 0 ? (
-        <p>No hay usuarios alojados actualmente.</p>
+        <p className="clientes-message">
+          No hay usuarios alojados actualmente.
+        </p>
       ) : (
-        <ul className="space-y-3">
+        <ul className="clientes-list">
           {usuarios.map((usuario) => (
-            <li key={usuario._id} className="p-4 border rounded shadow">
-              <p><strong>Nombre:</strong> {usuario.nombre}</p>
-              <p><strong>Correo:</strong> {usuario.email}</p>
-              <p><strong>Habitación:</strong> {usuario.habitacion || 'N/A'}</p>
-              <p><strong>Fecha de entrada:</strong> {usuario.fechaEntrada}</p>
+            <li key={usuario._id} className="cliente-item">
+              <p>
+                <strong>Nombre:</strong> {usuario.nombre}
+              </p>
+              <p>
+                <strong>Correo:</strong> {usuario.email}
+              </p>
+              <p>
+                <strong>Habitación:</strong> {usuario.habitacion || "N/A"}
+              </p>
+              <p>
+                <strong>Fecha de entrada:</strong> {usuario.fechaEntrada}
+              </p>
             </li>
           ))}
         </ul>
       )}
+      {error && <p className="clientes-error">{error}</p>}
     </div>
   );
 };

@@ -1,63 +1,52 @@
-import { useCallback } from "react";
-import { apiClient } from "../../service/apiClient";
+import { useEffect, useState } from 'react';
+import { obtenerReservacion, agregarReservacion  } from '../../service/reservacionService';
 
-export const useReservaciones = () => {
-  
-  const agregarReservacion = useCallback(async (reservacionData) => {
+export const useAgregarReservacion = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
+
+  const agregar = async (reservacionData) => {
+    setLoading(true);
+    setError(null);
     try {
-      const response = await apiClient.post("registerReservation", reservacionData);
-      return response.data;
-    } catch (error) {
-      console.error("Error al agregar una Reservación:", error);
-      throw error;
+      const result = await agregarReservacion(reservacionData);
+      setData(result);
+      return result;
+    } catch (err) {
+      setError(err);
+      throw err;
+    } finally {
+      setLoading(false);
     }
-  }, []);
-
-  const obtenerReservacion = useCallback(async (reservacionData, id) => {
-    try {
-      const response = await apiClient.get(`viewReservations/${id}`, { data: reservacionData });
-      return response.data;
-    } catch (error) {
-      console.error("Error al traer las Reservaciones:", error);
-      throw error;
-    }
-  }, []);
-
-  const buscarReservacion = useCallback(async (reservacionData, id) => {
-    try {
-      const response = await apiClient.get(`viewReservationsByHotel/${id}`, { data: reservacionData });
-      return response.data;
-    } catch (error) {
-      console.error("Error al buscar la Reservación:", error);
-      throw error;
-    }
-  }, []);
-
-  const actualizarReservacion = useCallback(async (reservacionData, id) => {
-    try {
-      const response = await apiClient.put(`updateReservation/${id}`, reservacionData);
-      return response.data;
-    } catch (error) {
-      console.error("Error al actualizar la Reservación:", error);
-      throw error;
-    }
-  }, []);
-
-  const eliminarReservacion = useCallback(async (reservacionData, id) => {
-    try {
-      const response = await apiClient.delete(`deleteReservation/${id}`, { data: reservacionData });
-      return response.data;
-    } catch (error) {
-      console.error("Error al eliminar la Reservación:", error);
-      throw error;
-    }
-  }, []);
-
-  return {
-    agregarReservacion,
-    obtenerReservacion,
-    buscarReservacion,
-    actualizarReservacion,
-    eliminarReservacion
   };
+
+  return { agregar, loading, error, data };
 };
+
+export const useReservacionesUsuario = (userId) => {
+  const [reservaciones, setReservaciones] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const cargarReservaciones = async () => {
+      try {
+        setCargando(true);
+        const data = await obtenerReservacion(userId);
+        setReservaciones(data.reservations || []);
+      } catch (err) {
+        setError(err.message || 'Error al obtener reservaciones');
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    if (userId) {
+      cargarReservaciones();
+    }
+  }, [userId]);
+
+  return { reservaciones, cargando, error };
+};
+

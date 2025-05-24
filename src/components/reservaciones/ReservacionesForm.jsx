@@ -1,21 +1,21 @@
-// components/FormularioReservacion.jsx
-import React, { useState } from "react";
-import { useReservaciones } from "../../shared/hooks/useReservations";
+import React, { useState, useEffect } from "react";
+
+import { useAgregarReservacion } from "../../shared/hooks/useReservations";
+
+import '../../style/ReservacionesForm.css'
 
 const FormularioReservacion = ({ onReservacionAgregada }) => {
-  const { agregarReservacion } = useReservaciones();
+  const { agregar, loading, error } = useAgregarReservacion();
 
   const [formData, setFormData] = useState({
     nombreCliente: "",
     fechaEntrada: "",
     fechaSalida: "",
     habitacion: "",
-    hotelId: "", // Si necesitas enviar el hotel relacionado
+    hotelId: "",
   });
 
-  const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState("");
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,12 +24,10 @@ const FormularioReservacion = ({ onReservacionAgregada }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setMensaje("");
-    setError("");
 
     try {
-      const nuevaReservacion = await agregarReservacion(formData);
+      const nuevaReservacion = await agregar(formData);
       setMensaje("Reservación agregada con éxito.");
       setFormData({
         nombreCliente: "",
@@ -42,16 +40,20 @@ const FormularioReservacion = ({ onReservacionAgregada }) => {
       if (onReservacionAgregada) {
         onReservacionAgregada(nuevaReservacion);
       }
-    } catch (err) {
-      setError("Error al agregar la reservación. Inténtalo de nuevo.");
-    } finally {
-      setLoading(false);
+    } catch {
+      // El error lo maneja useEffect para mostrar mensaje
     }
   };
 
+  useEffect(() => {
+    if (error) {
+      setMensaje("Error al agregar la reservación. Inténtalo de nuevo.");
+    }
+  }, [error]);
+
   return (
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 border rounded shadow space-y-4">
-      <h2 className="text-xl font-bold">Agregar Reservación</h2>
+    <form onSubmit={handleSubmit} className="reservaciones-container">
+      <h2 className="reservaciones-title">Agregar Reservación</h2>
 
       <input
         type="text"
@@ -59,7 +61,7 @@ const FormularioReservacion = ({ onReservacionAgregada }) => {
         value={formData.nombreCliente}
         onChange={handleChange}
         placeholder="Nombre del Cliente"
-        className="w-full p-2 border rounded"
+        className="reservaciones-input"  // <-- Cambiado aquí
         required
       />
 
@@ -68,7 +70,7 @@ const FormularioReservacion = ({ onReservacionAgregada }) => {
         name="fechaEntrada"
         value={formData.fechaEntrada}
         onChange={handleChange}
-        className="w-full p-2 border rounded"
+        className="reservaciones-input"  // <-- Cambiado aquí
         required
       />
 
@@ -77,7 +79,7 @@ const FormularioReservacion = ({ onReservacionAgregada }) => {
         name="fechaSalida"
         value={formData.fechaSalida}
         onChange={handleChange}
-        className="w-full p-2 border rounded"
+        className="reservaciones-input"  // <-- Cambiado aquí
         required
       />
 
@@ -87,7 +89,7 @@ const FormularioReservacion = ({ onReservacionAgregada }) => {
         value={formData.habitacion}
         onChange={handleChange}
         placeholder="Número de Habitación"
-        className="w-full p-2 border rounded"
+        className="reservaciones-input"  // <-- Cambiado aquí
         required
       />
 
@@ -97,20 +99,23 @@ const FormularioReservacion = ({ onReservacionAgregada }) => {
         value={formData.hotelId}
         onChange={handleChange}
         placeholder="ID del Hotel"
-        className="w-full p-2 border rounded"
+        className="reservaciones-input"  // <-- Cambiado aquí
         required
       />
 
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+        className="reservaciones-button" // <-- Cambiado aquí
         disabled={loading}
       >
         {loading ? "Guardando..." : "Agregar Reservación"}
       </button>
 
-      {mensaje && <p className="text-green-600">{mensaje}</p>}
-      {error && <p className="text-red-600">{error}</p>}
+      {mensaje && (
+        <p className={`reservaciones-message ${error ? "error" : ""}`}>
+          {mensaje}
+        </p>
+      )}
     </form>
   );
 };

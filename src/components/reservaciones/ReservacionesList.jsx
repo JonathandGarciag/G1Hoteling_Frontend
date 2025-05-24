@@ -1,45 +1,29 @@
-// components/ReservacionesList.jsx
-import React, { useEffect, useState } from "react";
-import { useReservaciones } from "../../shared/hooks/useReservations";
+import React from "react";
 
-const ReservacionesList = ({ idHotel }) => {
-  const { obtenerReservacion } = useReservaciones();
-  const [reservaciones, setReservaciones] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+import { useReservacionesUsuario } from "../../shared/hooks/useReservations.jsx";
 
-  useEffect(() => {
-    const cargarReservaciones = async () => {
-      try {
-        const data = await obtenerReservacion({}, idHotel);
-        setReservaciones(data);
-      } catch (err) {
-        setError("No se pudieron cargar las reservaciones.");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+import '../../style/ReservacionesList.css';
 
-    cargarReservaciones();
-  }, [idHotel, obtenerReservacion]);
-
-  if (loading) return <p>Cargando reservaciones...</p>;
-  if (error) return <p>{error}</p>;
+const ReservacionesList = ({ userId }) => {
+  const { reservaciones, cargando, error } = useReservacionesUsuario(userId);
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">Lista de Reservaciones</h2>
-      {reservaciones.length === 0 ? (
-        <p>No hay reservaciones registradas.</p>
+    <div className="reservaciones-container">
+      <h2 className="reservaciones-title">Lista de Reservaciones</h2>
+      {cargando ? (
+        <p className="reservaciones-message">Cargando reservaciones...</p>
+      ) : error ? (
+        <p className="reservaciones-message">{error}</p>
+      ) : reservaciones.length === 0 ? (
+        <p className="reservaciones-message">No hay reservaciones registradas.</p>
       ) : (
-        <ul className="space-y-3">
+        <ul className="reservaciones-list">
           {reservaciones.map((reserva) => (
-            <li key={reserva._id} className="p-4 border rounded shadow">
-              <p><strong>Cliente:</strong> {reserva.nombreCliente}</p>
-              <p><strong>Fecha de Entrada:</strong> {reserva.fechaEntrada}</p>
-              <p><strong>Fecha de Salida:</strong> {reserva.fechaSalida}</p>
-              <p><strong>Habitación:</strong> {reserva.habitacion}</p>
+            <li key={reserva._id} className="reservacion-item">
+              <p><strong>Cliente:</strong> {reserva.userId}</p>
+              <p><strong>Fecha de Entrada:</strong> {new Date(reserva.startDate).toLocaleDateString()}</p>
+              <p><strong>Fecha de Salida:</strong> {new Date(reserva.endDate).toLocaleDateString()}</p>
+              <p><strong>Habitación:</strong> {reserva.roomId}</p>
             </li>
           ))}
         </ul>
