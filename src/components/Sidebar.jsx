@@ -1,94 +1,79 @@
-import React, { useState } from "react";
+/** @jsxImportSource @emotion/react */
+import React from "react";
 import {
-  FaHotel,
-  FaBed,
-  FaCalendarAlt,
-  FaHistory,
-  FaUser,
-  FaBook,
-  FaUsers,
-  FaFileInvoice,
-  FaUserShield,
-  FaChartBar,
-  FaCog,
-  FaBars,
+  FaHotel, FaBed, FaCalendarAlt, FaHistory, FaUser,
+  FaBook, FaUsers, FaFileInvoice, FaUserShield, FaChartBar, FaCog
 } from "react-icons/fa";
-import "../style/Sidebar.css";
+import { motion } from "framer-motion";
 import { useAuth } from "../shared/hooks/useAuthContext";
 import { useNavigate } from "react-router-dom";
-import { useUserDetails } from "../shared/hooks/useUserDetails"; 
 import { logout } from "../shared/hooks/userLogout";
+import "../style/auth/Sidebar.css";
 
-const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(false);
+const variants = {
+  open: { y: 0, opacity: 1 },
+  closed: { y: 500, opacity: 0 }
+};
+
+const Sidebar = ({ isOpen }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   return (
-    <div className={`modern-sidebar ${collapsed ? "collapsed" : ""}`}>
-      <div className="top-section">
-        <div className="logo">{!collapsed ? "Hoteling" : "H"}</div>
-        <button className="toggle-btn" onClick={() => setCollapsed(!collapsed)}>
-          <FaBars />
-        </button>
+    <motion.div
+      className="sidebar-chat modern"
+      initial="closed"
+      animate={isOpen ? "open" : "closed"}
+      exit="closed"
+      variants={variants}
+      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+    >
+      <div className="sidebar-header">
+        <div className="profile-icon">
+          <span>{user?.email?.charAt(0).toUpperCase()}</span>
+        </div>
+        <div className="user-info-right">
+          <h3 className="username">{user?.username}</h3>
+          <h3 className="username">{user?.email}</h3>
+        </div>
       </div>
 
-      <ul className="menu">
+      <ul className="menu modern-menu">
         {user?.role === "CLIENT_ROLE" && (
           <>
-            <li><FaHotel /> <span>Hoteles</span></li>
-            <li><FaBed /> <span>Habitaciones</span></li>
-            <li><FaCalendarAlt /> <span>Eventos</span></li>
-            <li><FaHistory /> <span>Reservaciones</span></li>
-            <li><FaCog /> <span>Mi cuenta</span></li>
+            <li><FaHotel /><span>Hoteles</span></li>
+            <li><FaBed /><span>Habitaciones</span></li>
+            <li><FaCalendarAlt /><span>Eventos</span></li>
+            <li><FaHistory /><span>Reservaciones</span></li>
+            <li><FaCog /><span>Mi cuenta</span></li>
           </>
         )}
-
         {user?.role === "HOTEL_ROLE" && (
           <>
-            <li><FaBook /> <span>Reservaciones</span></li>
-            <li><FaUsers /> <span>Clientes actuales</span></li>
-            <li><FaBed /> <span>Disponibilidad</span></li>
-            <li><FaFileInvoice /> <span>Facturación</span></li>
+            <li><FaBook /><span>Reservaciones</span></li>
+            <li><FaUsers /><span>Clientes actuales</span></li>
+            <li><FaBed /><span>Disponibilidad</span></li>
+            <li><FaFileInvoice /><span>Facturación</span></li>
           </>
         )}
-
         {user?.role === "ADMIN_ROLE" && (
           <>
-            <li onClick={() => navigate("/users")}>
-              <FaUserShield /> <span>Gestión de usuarios</span>
-            </li>
-            <li onClick={() => navigate("/hotels")}>
-              <FaHotel /> <span>Gestión de hoteles</span>
-            </li>
-            <li onClick={() => navigate("/statistics")}>
-              <FaChartBar /> <span>Estadísticas</span>
-            </li>
-            <li onClick={() => navigate("/roles")}>
-              <FaUser /> <span>Cambiar roles</span>
-            </li>
+            <li onClick={() => navigate("users")}><FaUserShield /><span>Gestión de usuarios</span></li>
+            <li onClick={() => navigate("hotel/viewHotel")}><FaHotel /><span>Hoteleria</span></li>
+            <li onClick={() => navigate("statistics")}><FaChartBar /><span>Estadísticas</span></li>
+            <li onClick={() => navigate("updateRole/:id")}><FaUser /><span>Cambiar roles</span></li>
+            <li onClick={() => navigate("hotel/permissions")}><FaUser /><span>Gestión de hoteles</span></li>
+            <li onClick={() => navigate("hotel/manage")}><FaHotel /><span>Nuevo/Asignar hotel</span></li>
           </>
         )}
       </ul>
 
-      <div className="user-section">
-        <div className="user-profile">
-          <div className="avatar-generated">
-            {user?.email?.charAt(0).toUpperCase()}
-          </div>
-          <div className="user-details">
-            <p className="name">{user?.username}</p>
-            <p className="email">{user?.email}</p>
-          </div>
-        </div>
-
-        {!collapsed && (
-        <button className="logout-button" onClick={logout}>
+      <div className="sidebar-footer">
+        <button className="logout-modern" onClick={logout}>
           ⏎ Cerrar sesión
         </button>
-      )}  
       </div>
-    </div>
+    </motion.div>
   );
 };
 

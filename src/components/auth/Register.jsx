@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
-import hotelImage from "../assets/image/hotelogin.png";
-import { useRegister } from "../shared/hooks/useRegister";
+import hotelImage from "../../assets/image/hotelogin.png";
+import { useRegister } from "../../shared/hooks/useRegister";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import '../style/Register.css';
+import '../../style/auth/Register.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -15,7 +15,7 @@ const Register = () => {
     password: ""
   });
 
-  const { register, loading } = useRegister(); // ✅ renombrado aquí
+  const { register, loading } = useRegister(); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,7 +35,7 @@ const Register = () => {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              register(formData); // ✅ función correcta aquí
+              register(formData); 
             }}
             className="login-form"
           >
