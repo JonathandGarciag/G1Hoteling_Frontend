@@ -11,9 +11,9 @@ import ClientesActuales from './components/ClientesActuales/ClientesActuales';
 import ListEventosPorHotel from './components/eventos/ListEventosPorHotel';
 import EventoForm from './components/eventos/EventoForm';
 import HabitacionForm from './components/habitaciones/HabitacionForm';
+import ListaHabitacionesDisponibles from './components/habitaciones/ListaHabitacionesDisponibles';
 
 const App = () => {
-  const ejemploHotelId = "123abc"; 
 
   return (
     <Router>
@@ -22,10 +22,10 @@ const App = () => {
           <Route path="users" element={<UserList />} />
           <Route path="reservaciones" element={<ReservacionesList />} />
           <Route path="reservacion-form" element={<ReservacionesForm />} />
-          <Route path="usuarios-hotel/:hotelId" element={<ClientesActuales />} />
+          <Route path="room-form" element={<HabitacionForm />} />
           <Route path="eventos-hotel/:hotelId" element={<ListEventosPorHotel />} />
           <Route path="evento-form" element={<EventoForm />} />
-          <Route path="room-form" element={<HabitacionForm hotelId={ejemploHotelId} />} />
+          <Route path="room-list" element={<ListaHabitacionesDisponibles />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

@@ -21,18 +21,16 @@ export const obtenerReservacion = async (id) => {
   }
 };
 
-export const buscarReservacion = async (reservacionData, id) => {
+export const buscarReservacionesPorHotel = async (hotelId) => {
   try {
-    const response = await apiClient.get(
-      `viewReservationsByHotel/${id}`,
-      reservacionData
-    );
+    const response = await apiClient.get(`reservation/viewReservationsByHotel/${hotelId}`);
     return response.data;
   } catch (error) {
-    console.log("Error al Buscar la Reservacion: ", error);
+    console.error("Error al buscar las reservaciones del hotel:", error.response?.data?.msg || error.message);
     throw error;
   }
 };
+
 
 export const actualizarReservacion = async (reservacionData, id) => {
   try {

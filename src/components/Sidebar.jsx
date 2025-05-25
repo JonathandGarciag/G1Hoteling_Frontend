@@ -59,10 +59,10 @@ const Sidebar = () => {
             <li onClick={() => navigate("/reservaciones")}>
               <FaBook /> <span>Reservaciones</span>
             </li>
-            <li onClick={() => navigate(`/usuarios-hotel/${user.hotelId}`)}>
-              <FaUsers /> <span>Clientes actuales</span>
+            <li onClick={() => navigate(`/room-form`)}>
+              <FaUsers /> <span>Registrar Habitacion</span>
             </li>
-            <li onClick={() => navigate("/room-form")}>
+            <li onClick={() => navigate("/room-list")}>
               <FaBed /> <span>Disponibilidad</span>
             </li>
             <li onClick={() => navigate(`/eventos-hotel/${user.hotelId}`)}>

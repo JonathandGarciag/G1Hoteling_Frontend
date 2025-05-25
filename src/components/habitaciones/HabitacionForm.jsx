@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 
-import { useHabitaciones } from "../../shared/hooks/useHabitaciones";
 
 import '../../style/HabitacionForm.css'
 
 const HabitacionForm = ({ hotelId }) => {
-  const { agregarHabitacion } = useHabitaciones();
 
   const [habitacion, setHabitacion] = useState({
     nombre: "",

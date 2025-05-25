@@ -1,0 +1,72 @@
+.event-form-container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.event-form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.event-form .form-group {
+  margin-bottom: 16px;
+}
+
+.event-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+}
+
+.event-form input[type="text"],
+.event-form input[type="date"],
+.event-form textarea,
+.event-form select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.event-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.servicios-input {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.servicios-input input {
+  flex: 1;
+}
+
+.servicios-lista {
+  margin-top: 10px;
+  padding-left: 20px;
+  list-style-type: disc;
+  font-size: 0.95em;
+  color: #555;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #0077cc;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #005fa3;
+}

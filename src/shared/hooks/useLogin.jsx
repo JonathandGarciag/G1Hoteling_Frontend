@@ -20,14 +20,18 @@ export const useLogin = () => {
       }
 
       const userDetails = response.data.userDetails;
+
       if (!userDetails?.token) {
         toast.error("No se recibió token");
         return;
       }
 
-      localStorage.setItem("user", JSON.stringify(userDetails));
+      const hotelId = userDetails.hotel?._id || null;
+      const updatedUserDetails = { ...userDetails, hotelId };
+
+      localStorage.setItem("user", JSON.stringify(updatedUserDetails));
       localStorage.setItem("token", userDetails.token);
-      setUser(userDetails);
+      setUser(updatedUserDetails);
 
       toast.success("¡Sesión iniciada!");
       navigate("/");

@@ -1,0 +1,93 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+  color: #0d2a38;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 600;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #256b67;
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.list-item {
+  background-color: #d6cfbb;
+  border-radius: 8px;
+  padding: 20px;
+  border-left: 4px solid #256b67;
+  box-shadow: 0 2px 5px rgba(13, 42, 56, 0.1);
+  transition: all 0.3s ease;
+  width: calc(50% - 40px); /* Dos columnas con gap incluido */
+  min-width: 300px;
+  max-width: 400px;
+  flex-grow: 1;
+}
+
+.list-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(13, 42, 56, 0.2);
+  border-left-width: 6px;
+}
+
+.list-item div {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #0d2a38; /* Azul oscuro */
+}
+
+.label {
+  font-weight: 600;
+  color: #256b67; /* Verde azulado */
+  display: inline-block;
+  min-width: 90px;
+}
+
+.amenities {
+  color: #12361f; /* Verde oscuro */
+  font-style: italic;
+}
+
+.no-data {
+  text-align: center;
+  color: #0d2a38; /* Azul oscuro */
+  font-size: 18px;
+  margin-top: 30px;
+  padding: 15px;
+  background-color: rgba(37, 107, 103, 0.1); /* Verde azulado muy claro */
+  border-radius: 8px;
+  width: 100%;
+}
+
+/* Estado de carga */
+@keyframes pulse {
+  0% { background-color: rgba(214, 207, 187, 0.5); }
+  50% { background-color: rgba(37, 107, 103, 0.3); }
+  100% { background-color: rgba(214, 207, 187, 0.5); }
+}
+
+.no-data.cargando {
+  animation: pulse 2s infinite;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+  .list-item {
+    width: 100%;
+    min-width: auto;
+    max-width: none;
+  }
+}

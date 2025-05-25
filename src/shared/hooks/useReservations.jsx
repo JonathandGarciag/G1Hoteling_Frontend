@@ -1,30 +1,7 @@
 import { useEffect, useState } from 'react';
-import { obtenerReservacion, agregarReservacion  } from '../../service/reservacionService';
+import { buscarReservacionesPorHotel } from '../../service/reservacionService';
 
-export const useAgregarReservacion = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [data, setData] = useState(null);
-
-  const agregar = async (reservacionData) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const result = await agregarReservacion(reservacionData);
-      setData(result);
-      return result;
-    } catch (err) {
-      setError(err);
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return { agregar, loading, error, data };
-};
-
-export const useReservacionesUsuario = (userId) => {
+export const useReservacionesPorHotel = (hotelId) => {
   const [reservaciones, setReservaciones] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
@@ -33,7 +10,7 @@ export const useReservacionesUsuario = (userId) => {
     const cargarReservaciones = async () => {
       try {
         setCargando(true);
-        const data = await obtenerReservacion(userId);
+        const data = await buscarReservacionesPorHotel(hotelId);
         setReservaciones(data.reservations || []);
       } catch (err) {
         setError(err.message || 'Error al obtener reservaciones');
@@ -42,11 +19,12 @@ export const useReservacionesUsuario = (userId) => {
       }
     };
 
-    if (userId) {
+    if (hotelId) {
       cargarReservaciones();
+    } else {
+      console.warn("hotelId no proporcionado");
     }
-  }, [userId]);
+  }, [hotelId]);
 
   return { reservaciones, cargando, error };
 };
-

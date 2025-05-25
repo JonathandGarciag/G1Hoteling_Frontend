@@ -1,32 +1,42 @@
-import { useCallback } from "react";
-import {
-  obtenerHabitacionesPorHotel,
-  registrarHabitacion,
-  actualizarHabitacion,
-  eliminarHabitacion,
-} from "../../service/habitacionService";
+import { useEffect, useState } from "react";
+import { obtenerHabitacionesPorHotel } from "../../service/habitacionService";
 
-export const useHabitaciones = () => {
-  const getHabitaciones = useCallback(async (hotelId) => {
-    return await obtenerHabitacionesPorHotel(hotelId);
-  }, []);
+export const useHabitacionesDisponibles = (hotelId) => {
+  const [habitaciones, setHabitaciones] = useState([]);
+  const [cargando, setCargando] = useState(false);
+  const [error, setError] = useState(null);
 
-  const agregarHabitacion = useCallback(async (habitacionData) => {
-    return await registrarHabitacion(habitacionData);
-  }, []);
+  useEffect(() => {
+    if (!hotelId) {
+      setHabitaciones([]);
+      setCargando(false);
+      return;
+    }
 
-  const editarHabitacion = useCallback(async (id, habitacionData) => {
-    return await actualizarHabitacion(id, habitacionData);
-  }, []);
+    const fetchHabitaciones = async () => {
+      setCargando(true);
+      setError(null);
 
-  const borrarHabitacion = useCallback(async (id) => {
-    return await eliminarHabitacion(id);
-  }, []);
+      try {
+        const todasHabitaciones = await obtenerHabitacionesPorHotel(hotelId);
 
-  return {
-    getHabitaciones,
-    agregarHabitacion,
-    editarHabitacion,
-    borrarHabitacion,
-  };
+        // Filtra solo las habitaciones cuyo status sea "disponible" (case-insensitive)
+        const disponibles = todasHabitaciones.filter(
+          (h) => h.status && h.status.toLowerCase() === "disponible"
+        );
+
+        setHabitaciones(disponibles);
+      } catch (err) {
+        setError(err);
+        setHabitaciones([]);
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    fetchHabitaciones();
+
+  }, [hotelId]);
+
+  return { habitaciones, cargando, error };
 };
