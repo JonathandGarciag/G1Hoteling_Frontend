@@ -91,7 +91,7 @@ const EventForm = ({ hotelId: propHotelId }) => {
         titulo: formData.titulo,
         descripcion: formData.descripcion,
         fecha: formData.fecha,
-        serviciosIncluidos: formData.services, // Asegurarse que es un array
+        serviciosIncluidos: formData.services,
         estado: formData.estado,
         horarios: formData.schedule.map((item) => ({
           fecha: item.date,
@@ -100,7 +100,6 @@ const EventForm = ({ hotelId: propHotelId }) => {
         })),
       };
 
-      // Validación adicional
       if (!Array.isArray(payload.serviciosIncluidos)) {
         payload.serviciosIncluidos = [];
       }

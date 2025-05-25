@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { crearEvento } from "../../service/eventosService";
+import { useState, useEffect } from "react";
+import { crearEvento, obtenerEventosPorHotel  } from "../../service/eventosService";
 
 export const useRegistrarEvento = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -11,7 +11,6 @@ export const useRegistrarEvento = () => {
     setError(null);
     
     try {
-      // Validación de campos requeridos
       const requiredFields = ['hotelId', 'titulo', 'fecha'];
       const missingFields = requiredFields.filter(field => !eventoData[field]);
       
@@ -19,12 +18,10 @@ export const useRegistrarEvento = () => {
         throw new Error(`Faltan campos requeridos: ${missingFields.join(', ')}`);
       }
 
-      // Asegurar que serviciosIncluidos es un array
       if (!Array.isArray(eventoData.serviciosIncluidos)) {
         eventoData.serviciosIncluidos = [];
       }
 
-      // Formatear fechas correctamente
       const datosFormateados = {
         ...eventoData,
         fecha: new Date(eventoData.fecha).toISOString(),
@@ -43,7 +40,7 @@ export const useRegistrarEvento = () => {
     } catch (err) {
       const errorMessage = err.message || 'Error al registrar el evento';
       setError(errorMessage);
-      throw err; // Re-lanzamos el error para manejo adicional
+      throw err;
     } finally {
       setIsLoading(false);
     }
@@ -59,4 +56,49 @@ export const useRegistrarEvento = () => {
       setEventoRegistrado(null);
     }
   };
+};
+
+export const useEventosPorHotel = (hotelId) => {
+  const [eventos, setEventos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchEventos = async () => {
+      try {
+        if (!hotelId) {
+          throw new Error("ID de hotel no proporcionado");
+        }
+
+        setCargando(true);
+        setError(null);
+
+        const data = await obtenerEventosPorHotel(hotelId);
+        
+        if (isMounted) {
+          setEventos(data);
+        }
+      } catch (err) {
+        if (isMounted) {
+          console.error("Error obteniendo eventos:", err);
+          setError(err);
+          setEventos([]);
+        }
+      } finally {
+        if (isMounted) {
+          setCargando(false);
+        }
+      }
+    };
+
+    fetchEventos();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [hotelId]);
+
+  return { eventos, cargando, error };
 };

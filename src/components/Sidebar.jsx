@@ -13,6 +13,7 @@ import {
   FaCog,
   FaBars,
   FaCalendar,
+  FaCalendarDay 
 } from "react-icons/fa";
 import "../style/Sidebar.css";
 import { useAuth } from "../shared/hooks/useAuthContext";
@@ -70,7 +71,10 @@ const Sidebar = () => {
               <FaFileInvoice /> <span>Facturación</span>
             </li>
             <li onClick={() => navigate("/event-form")}>
-              <FaBook /> <span>Eventos</span>
+              <FaCalendar /> <span>Registrar Eventos</span>
+            </li>
+            <li onClick={() => navigate("/events")}>
+              <FaCalendarDay /> <span>Eventos</span>
             </li>
           </>
         )}

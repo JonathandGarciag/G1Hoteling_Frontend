@@ -32,8 +32,22 @@ export const cancelarEvento = async (id) => {
 
 export const obtenerEventosPorHotel = async (hotelId) => {
   try {
-    const response = await apiClient.get(`/hotel/${hotelId}`);
-    return response.data;
+    const response = await apiClient.get(`evento/hotel/${hotelId}`);
+    
+    if (!response.data || typeof response.data !== 'object') {
+      console.error("Respuesta inválida del servidor");
+      return [];
+    }
+
+    const eventos = response.data.eventos || response.data;
+    
+    if (Array.isArray(eventos)) {
+      return eventos;
+    } else if (typeof eventos === 'object' && eventos !== null) {
+      return [eventos];
+    }
+    
+    return [];
   } catch (error) {
     console.log("Error al obtener eventos por hotel:", error);
     throw error;
