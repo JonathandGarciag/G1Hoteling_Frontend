@@ -57,7 +57,7 @@
 }
 
 .evento-card {
-  background: #0d2a38;
+  background: #d6cfbb;
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -83,7 +83,7 @@
   justify-content: space-between;
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #256b67;
 }
 
 .estado {
@@ -106,7 +106,7 @@
 .servicios {
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #256b67;
 }
 
 .servicios ul {
@@ -125,4 +125,12 @@
   .eventos-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.fecha {
+  color: #555;
+}
+
+.servicios {
+  color: #555
 }

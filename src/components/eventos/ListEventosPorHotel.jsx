@@ -43,7 +43,7 @@ const ListEventosPorHotel = () => {
               <p className="descripcion">{evento.descripcion}</p>
               
               <div className="evento-meta">
-                <span>
+                <span className="fecha">
                   <strong>Fecha:</strong> {new Date(evento.fecha).toLocaleDateString()}
                 </span>
                 <span className={`estado ${evento.estado}`}>
