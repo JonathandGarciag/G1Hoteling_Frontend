@@ -30,6 +30,9 @@ const ListaHabitacionesDisponibles = () => {
                 <span className="label">Estado:</span> {habitacion.status}
               </div>
               <div>
+                <span className="label">Precio:</span> Q {habitacion.pricePerNight}
+              </div>
+              <div>
                 <span className="label">Servicios:</span>{" "}
                 <span className="amenities">{habitacion.amenities?.join(", ")}</span>
               </div>

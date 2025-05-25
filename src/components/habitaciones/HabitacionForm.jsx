@@ -1,110 +1,200 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+import { useRegistrarHabitacion } from '../../shared/hooks/useHabitaciones';
+import '../../style/HabitacionForm.css';
 
+const FormularioHabitacion = ({ hotelId: propHotelId }) => {
+  const { registrar, isLoading, error, reset } = useRegistrarHabitacion();
 
-import '../../style/HabitacionForm.css'
+  // Leer desde localStorage si no se pasa como prop
+  const user = JSON.parse(localStorage.getItem('user'));
+  const hotelId = propHotelId || user?.hotelId || user?.hotel?._id;
 
-const HabitacionForm = ({ hotelId }) => {
+  const initialFormData = {
+    hotelId: hotelId || '',
+    roomType: 'simple',
+    capacity: 1,
+    pricePerNight: 0,
+    status: 'disponible',
+    amenities: [],
+    availability: [],
+    newAmenity: '',
+    newAvailability: {
+      startDate: '',
+      endDate: ''
+    }
+  };
 
-  const [habitacion, setHabitacion] = useState({
-    nombre: "",
-    descripcion: "",
-    capacidad: "",
-    precio: "",
-    hotelId: hotelId || "",
-  });
-
-  const [mensaje, setMensaje] = useState(null);
-  const [error, setError] = useState(null);
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleChange = (e) => {
-    setHabitacion({
-      ...habitacion,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleAvailabilityChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      newAvailability: { ...prev.newAvailability, [name]: value }
+    }));
+  };
+
+  const addAmenity = () => {
+    if (formData.newAmenity.trim()) {
+      setFormData(prev => ({
+        ...prev,
+        amenities: [...prev.amenities, prev.newAmenity.trim()],
+        newAmenity: ''
+      }));
+    }
+  };
+
+  const removeAmenity = (index) => {
+    setFormData(prev => ({
+      ...prev,
+      amenities: prev.amenities.filter((_, i) => i !== index)
+    }));
+  };
+
+  const addAvailability = () => {
+    if (formData.newAvailability.startDate && formData.newAvailability.endDate) {
+      setFormData(prev => ({
+        ...prev,
+        availability: [...prev.availability, prev.newAvailability],
+        newAvailability: { startDate: '', endDate: '' }
+      }));
+    }
+  };
+
+  const removeAvailability = (index) => {
+    setFormData(prev => ({
+      ...prev,
+      availability: prev.availability.filter((_, i) => i !== index)
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMensaje(null);
-    setError(null);
     try {
-      await agregarHabitacion(habitacion);
-      setMensaje("Habitación registrada correctamente.");
-      setHabitacion({
-        nombre: "",
-        descripcion: "",
-        capacidad: "",
-        precio: "",
-        hotelId,
-      });
+      await registrar(formData);
+      setFormData(initialFormData); // Limpiar inputs al postear
     } catch (err) {
-      setError("Error al registrar la habitación.");
+      console.error('Error al registrar la habitación:', err);
     }
   };
 
   return (
-    <div className="habitacion-form-container">
-      <h2 className="habitacion-form-title">Registrar Habitación</h2>
-      {mensaje && <p className="habitacion-form-message success">{mensaje}</p>}
-      {error && <p className="habitacion-form-message error">{error}</p>}
-      <form onSubmit={handleSubmit} className="habitacion-form">
-        <div>
-          <label htmlFor="nombre" className="evento-form-label">Nombre</label>
-          <input
-            type="text"
-            id="nombre"
-            name="nombre"
-            value={habitacion.nombre}
-            onChange={handleChange}
-            required
-            className="evento-form-input"
-          />
+    <div className="form-container">
+      <h2>Registrar Nueva Habitación</h2>
+
+      {error && (
+        <div className="error-message">
+          {error}
+          <button onClick={reset} className="close-error">×</button>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Tipo de Habitación:</label>
+          <select name="roomType" value={formData.roomType} onChange={handleChange}>
+            <option value="simple">Simple</option>
+            <option value="doble">Doble</option>
+            <option value="suite">Suite</option>
+          </select>
         </div>
 
-        <div>
-          <label htmlFor="capacidad" className="evento-form-label">Capacidad</label>
-          <input
-            type="number"
-            id="capacidad"
-            name="capacidad"
-            value={habitacion.capacidad}
-            onChange={handleChange}
-            required
-            className="evento-form-input"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="precio" className="evento-form-label">Precio por noche</label>
+        <div className="form-group">
+          <label>Capacidad:</label>
           <input
             type="number"
-            id="precio"
-            name="precio"
-            value={habitacion.precio}
+            name="capacity"
+            min="1"
+            value={formData.capacity}
             onChange={handleChange}
-            required
-            className="evento-form-input"
           />
         </div>
 
-        <div style={{ gridColumn: "span 2" }}>
-          <label htmlFor="descripcion" className="evento-form-label">Descripción</label>
-          <textarea
-            id="descripcion"
-            name="descripcion"
-            value={habitacion.descripcion}
+        <div className="form-group">
+          <label>Precio por Noche:</label>
+          <input
+            type="number"
+            name="pricePerNight"
+            min="0"
+            step="0.01"
+            value={formData.pricePerNight}
             onChange={handleChange}
-            required
-            className="evento-form-textarea"
           />
         </div>
 
-        <button type="submit" className="habitacion-form-button">
-          Registrar
-        </button>
+        <div className="form-group">
+          <label>Estado:</label>
+          <select name="status" value={formData.status} onChange={handleChange}>
+            <option value="disponible">Disponible</option>
+            <option value="reservada">Reservada</option>
+            <option value="en mantenimiento">En Mantenimiento</option>
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label>Servicios:</label>
+          <div className="input-group">
+            <input
+              type="text"
+              value={formData.newAmenity}
+              onChange={(e) => setFormData({ ...formData, newAmenity: e.target.value })}
+              placeholder="Agregar servicio (ej: WiFi, TV)"
+            />
+            <button type="button" onClick={addAmenity} className="add-button">+</button>
+          </div>
+          <div className="tags-container">
+            {formData.amenities.map((amenity, index) => (
+              <span key={index} className="tag">
+                {amenity}
+                <button type="button" onClick={() => removeAmenity(index)} className="remove-tag">×</button>
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>Disponibilidad:</label>
+          <div className="availability-input">
+            <input
+              type="date"
+              name="startDate"
+              value={formData.newAvailability.startDate}
+              onChange={handleAvailabilityChange}
+            />
+            <input
+              type="date"
+              name="endDate"
+              value={formData.newAvailability.endDate}
+              onChange={handleAvailabilityChange}
+            />
+            <button type="button" onClick={addAvailability} className="add-button">+</button>
+          </div>
+          <div className="availability-list">
+            {formData.availability.map((avail, index) => (
+              <div key={index} className="availability-item">
+                {new Date(avail.startDate).toLocaleDateString()} - {new Date(avail.endDate).toLocaleDateString()}
+                <button type="button" onClick={() => removeAvailability(index)} className="remove-tag">×</button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="form-actions">
+          <button type="submit" disabled={isLoading} className="submit-button">
+            {isLoading ? 'Registrando...' : 'Registrar Habitación'}
+          </button>
+          <button type="button" onClick={() => setFormData(initialFormData)} className="cancel-button" disabled={isLoading}>
+            Cancelar
+          </button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default HabitacionForm;
+export default FormularioHabitacion;

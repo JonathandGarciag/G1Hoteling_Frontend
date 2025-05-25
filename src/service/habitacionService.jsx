@@ -13,7 +13,7 @@ export const obtenerHabitacionesPorHotel = async (hotelId) => {
 
 export const registrarHabitacion = async (habitacionData) => {
   try {
-    const response = await apiClient.post("/registerRoom", habitacionData);
+    const response = await apiClient.post("room/registerRoom", habitacionData);
     return response.data;
   } catch (error) {
     console.error("Error al registrar la habitación:", error);
