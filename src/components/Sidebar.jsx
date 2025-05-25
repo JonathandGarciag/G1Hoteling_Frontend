@@ -12,6 +12,7 @@ import {
   FaChartBar,
   FaCog,
   FaBars,
+  FaCalendar,
 } from "react-icons/fa";
 import "../style/Sidebar.css";
 import { useAuth } from "../shared/hooks/useAuthContext";
@@ -67,6 +68,9 @@ const Sidebar = () => {
             </li>
             <li onClick={() => navigate(`/eventos-hotel/${user.hotelId}`)}>
               <FaFileInvoice /> <span>Facturación</span>
+            </li>
+            <li onClick={() => navigate("/event-form")}>
+              <FaBook /> <span>Eventos</span>
             </li>
           </>
         )}

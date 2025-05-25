@@ -1,55 +1,62 @@
-import { useCallback } from "react";
-import { apiClient } from "../../service/apiClient";
+import { useState } from "react";
+import { crearEvento } from "../../service/eventosService";
 
-export const useEventos = () => {
-  // Crear un evento
-  const crearEvento = useCallback(async (eventoData) => {
-    try {
-      const response = await apiClient.post("/", eventoData);
-      return response.data;
-    } catch (error) {
-      console.error("Error al crear el evento:", error);
-      throw error;
-    }
-  }, []);
+export const useRegistrarEvento = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [eventoRegistrado, setEventoRegistrado] = useState(null);
 
-  // Editar un evento por ID
-  const editarEvento = useCallback(async (eventoData, id) => {
+  const registrar = async (eventoData) => {
+    setIsLoading(true);
+    setError(null);
+    
     try {
-      const response = await apiClient.put(`/${id}`, eventoData);
-      return response.data;
-    } catch (error) {
-      console.error("Error al editar el evento:", error);
-      throw error;
-    }
-  }, []);
+      // Validación de campos requeridos
+      const requiredFields = ['hotelId', 'titulo', 'fecha'];
+      const missingFields = requiredFields.filter(field => !eventoData[field]);
+      
+      if (missingFields.length > 0) {
+        throw new Error(`Faltan campos requeridos: ${missingFields.join(', ')}`);
+      }
 
-  // Cancelar un evento por ID
-  const cancelarEvento = useCallback(async (id) => {
-    try {
-      const response = await apiClient.patch(`/cancelar/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error("Error al cancelar el evento:", error);
-      throw error;
-    }
-  }, []);
+      // Asegurar que serviciosIncluidos es un array
+      if (!Array.isArray(eventoData.serviciosIncluidos)) {
+        eventoData.serviciosIncluidos = [];
+      }
 
-  // Obtener todos los eventos de un hotel
-  const obtenerEventosPorHotel = useCallback(async (hotelId) => {
-    try {
-      const response = await apiClient.get(`/hotel/${hotelId}`);
-      return response.data;
-    } catch (error) {
-      console.error("Error al obtener eventos por hotel:", error);
-      throw error;
+      // Formatear fechas correctamente
+      const datosFormateados = {
+        ...eventoData,
+        fecha: new Date(eventoData.fecha).toISOString(),
+        horarios: eventoData.horarios?.map(horario => ({
+          fecha: new Date(horario.fecha).toISOString(),
+          horaInicio: horario.horaInicio,
+          horaFin: horario.horaFin
+        })) || []
+      };
+
+      console.log('Datos formateados:', datosFormateados);
+      
+      const response = await crearEvento(datosFormateados);
+      setEventoRegistrado(response);
+      return response;
+    } catch (err) {
+      const errorMessage = err.message || 'Error al registrar el evento';
+      setError(errorMessage);
+      throw err; // Re-lanzamos el error para manejo adicional
+    } finally {
+      setIsLoading(false);
     }
-  }, []);
+  };
 
   return {
-    crearEvento,
-    editarEvento,
-    cancelarEvento,
-    obtenerEventosPorHotel,
+    registrar,
+    isLoading,
+    error,
+    eventoRegistrado,
+    reset: () => {
+      setError(null);
+      setEventoRegistrado(null);
+    }
   };
 };

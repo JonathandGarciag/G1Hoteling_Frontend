@@ -2,7 +2,7 @@ import { apiClient } from "./apiClient";
 
 export const crearEvento = async (eventoData) => {
   try {
-    const response = await apiClient.post("/", eventoData);
+    const response = await apiClient.post("evento/", eventoData);
     return response.data;
   } catch (error) {
     console.log("Error al crear el evento:", error);

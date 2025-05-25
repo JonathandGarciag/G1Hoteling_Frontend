@@ -7,7 +7,6 @@ import UserList from './components/users/UserList';
 
 import ReservacionesList from './components/reservaciones/ReservacionesList';
 import ReservacionesForm from './components/reservaciones/ReservacionesForm';
-import ListEventosPorHotel from './components/eventos/ListEventosPorHotel';
 import EventoForm from './components/eventos/EventoForm';
 import HabitacionForm from './components/habitaciones/HabitacionForm';
 import ListaHabitacionesDisponibles from './components/habitaciones/ListaHabitacionesDisponibles';
@@ -22,9 +21,8 @@ const App = () => {
           <Route path="reservaciones" element={<ReservacionesList />} />
           <Route path="reservacion-form" element={<ReservacionesForm />} />
           <Route path="room-form" element={<HabitacionForm />} />
-          <Route path="eventos-hotel/:hotelId" element={<ListEventosPorHotel />} />
-          <Route path="evento-form" element={<EventoForm />} />
           <Route path="room-list" element={<ListaHabitacionesDisponibles />} /></Route>
+          <Route path="event-form" element={<EventoForm />}></Route>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

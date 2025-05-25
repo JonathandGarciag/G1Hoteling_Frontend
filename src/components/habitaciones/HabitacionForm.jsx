@@ -5,7 +5,6 @@ import '../../style/HabitacionForm.css';
 const FormularioHabitacion = ({ hotelId: propHotelId }) => {
   const { registrar, isLoading, error, reset } = useRegistrarHabitacion();
 
-  // Leer desde localStorage si no se pasa como prop
   const user = JSON.parse(localStorage.getItem('user'));
   const hotelId = propHotelId || user?.hotelId || user?.hotel?._id;
 
@@ -77,7 +76,7 @@ const FormularioHabitacion = ({ hotelId: propHotelId }) => {
     e.preventDefault();
     try {
       await registrar(formData);
-      setFormData(initialFormData); // Limpiar inputs al postear
+      setFormData(initialFormData);
     } catch (err) {
       console.error('Error al registrar la habitación:', err);
     }
