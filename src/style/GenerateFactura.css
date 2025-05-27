@@ -1,0 +1,116 @@
+.factura-form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #faf7eef5;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(13, 42, 56, 0.15);
+}
+
+.factura-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #12361f;
+}
+
+.form-group input {
+  padding: 0.7rem;
+  border: 1px solid #d6cfbb;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.services-input {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.services-input input {
+  flex: 1;
+}
+
+.add-button {
+  background-color: #0eb6da;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.services-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.services-list li {
+  background-color: #e0f7fa;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remove-button {
+  background: none;
+  border: none;
+  color: #c62828;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+}
+
+.submit-button {
+  background-color: #256b67;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.submit-button:hover {
+  background-color: #1d5955;
+}
+
+.submit-button:disabled {
+  background-color: #a0b2b1;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.success-message {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-top: 1rem;
+}
