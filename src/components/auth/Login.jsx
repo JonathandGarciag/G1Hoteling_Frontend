@@ -3,7 +3,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../style/auth/Login.css";
 import hotelLoginImage from "../../assets/image/hotelogin.png";
-import { useLogin } from "../../shared/hooks/useLogin";
+import { useLogin } from "../../shared/hooks/auth/useLogin";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { motion } from "framer-motion"; 
 

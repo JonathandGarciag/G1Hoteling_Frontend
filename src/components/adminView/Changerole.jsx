@@ -2,7 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useChangeRole } from "../../shared/hooks/useChangeRole";
+import { useChangeRole } from "../../shared/hooks/user/useChangeRole";
 import { FaUser, FaEnvelope, FaUserShield } from "react-icons/fa";
 import "../../style/ChangeRole.css"; 
 

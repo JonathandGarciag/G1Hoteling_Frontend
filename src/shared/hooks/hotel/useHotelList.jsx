@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getHotels } from "../../service/userService";
+import { getHotels } from "../../../service/userService";
 import { toast } from "react-toastify";
 
 export const useHotelList = () => {

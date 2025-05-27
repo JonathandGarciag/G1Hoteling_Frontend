@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import hotelImage from "../../assets/image/hotelogin.png";
-import { useRegister } from "../../shared/hooks/useRegister";
+import { useRegister } from "../../shared/hooks/auth/useRegister";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import '../../style/auth/Register.css';

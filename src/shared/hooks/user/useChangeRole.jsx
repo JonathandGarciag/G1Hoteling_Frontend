@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { getUserById, updateUserRole } from "../../service/userService";
+import { getUserById, updateUserRole } from "../../../service/userService";
 import { AnimatePresence } from "framer-motion";
 import "react-toastify/dist/ReactToastify.css";
 

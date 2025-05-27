@@ -5,9 +5,9 @@ import {
   FaBook, FaUsers, FaFileInvoice, FaUserShield, FaChartBar, FaCog
 } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useAuth } from "../shared/hooks/useAuthContext";
+import { useAuth } from "../shared/hooks/auth/useAuthContext";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../shared/hooks/userLogout";
+import { logout } from "../shared/hooks/auth/userLogout";
 import "../style/auth/Sidebar.css";
 
 const variants = {
@@ -59,10 +59,9 @@ const Sidebar = ({ isOpen }) => {
         {user?.role === "ADMIN_ROLE" && (
           <>
             <li onClick={() => navigate("users")}><FaUserShield /><span>Gestión de usuarios</span></li>
-            <li onClick={() => navigate("hotel/viewHotel")}><FaHotel /><span>Hoteleria</span></li>
+            <li onClick={() => navigate("hotel/viewHotel")}><FaHotel /><span>Gestion De Hoteles</span></li>
             <li onClick={() => navigate("statistics")}><FaChartBar /><span>Estadísticas</span></li>
             <li onClick={() => navigate("updateRole/:id")}><FaUser /><span>Cambiar roles</span></li>
-            <li onClick={() => navigate("hotel/permissions")}><FaUser /><span>Gestión de hoteles</span></li>
             <li onClick={() => navigate("hotel/manage")}><FaHotel /><span>Nuevo/Asignar hotel</span></li>
           </>
         )}

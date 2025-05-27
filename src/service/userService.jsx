@@ -38,10 +38,11 @@ export const deleteHotel = async (id) => {
   return response.data;
 };
 
-export const assignHotelToUser = async ({ userToken, hotelToken }) => {
+export const assignHotelToUser = async ({ userIdentifier, hotelToken }) => {
   const response = await apiClient.post("/hotel/assignHotelToUser", {
-    userToken,
+    userIdentifier,
     hotelToken,
   });
   return response.data;
 };
+

@@ -1,57 +1,99 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { updateHotel, deleteHotel, getHotels } from "../../service/userService";
-import { TextField, Button } from "@mui/material";
+import {
+  TextField,
+  Button,
+  IconButton,
+  Tooltip,
+  Typography,
+  Paper,
+  Grid,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions
+} from "@mui/material";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { useHotelDetail } from "../../shared/hooks/hotel/useHotelDetail";
 import { toast } from "react-toastify";
 
 export default function HotelDetail() {
-  const { id } = useParams();
-  const [hotel, setHotel] = useState(null);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    getHotels().then((data) => {
-      const found = data.find((h) => h._id === id);
-      if (!found) return toast.error("Hotel no encontrado");
-      setHotel(found);
-    });
-  }, [id]);
-
-  const handleChange = (e) => {
-    setHotel({ ...hotel, [e.target.name]: e.target.value });
-  };
-
-  const handleUpdate = async () => {
-    await updateHotel(id, hotel);
-    toast.success("Hotel actualizado");
-    navigate("/hotel/viewHotel");
-  };
-
-  const handleDelete = async () => {
-    await deleteHotel(id);
-    toast.success("Hotel eliminado");
-    navigate("/hotel/viewHotel");
-  };
+  const {
+    hotel,
+    showUpdateNotice,
+    confirmDelete,
+    setConfirmDelete,
+    handleChange,
+    handleUpdate,
+    handleDelete,
+    navigate,
+  } = useHotelDetail();
 
   if (!hotel) return <p>Cargando...</p>;
 
   return (
-    <div className="hotel-wrapper">
-      <h2>Editar hotel</h2>
-      <TextField name="name" label="Nombre" value={hotel.name} onChange={handleChange} fullWidth />
-      <TextField name="address" label="Dirección" value={hotel.address} onChange={handleChange} fullWidth />
-      <TextField name="qualification" label="Calificación" value={hotel.qualification} onChange={handleChange} fullWidth />
-      <TextField name="amenities" label="Amenidades" value={hotel.amenities} onChange={handleChange} fullWidth />
-      <TextField name="image" label="Imagen URL" value={hotel.image} onChange={handleChange} fullWidth />
-      <div style={{ marginTop: "1rem" }}>
+    <Paper elevation={3} style={{ padding: "2rem", maxWidth: "800px", margin: "auto", marginTop: "2rem" }}>
+      <Typography variant="h5" gutterBottom>Editar hotel</Typography>
+
+      {hotel.accessToken && (
+        <div style={{ marginBottom: "1.5rem" }}>
+          <Typography variant="subtitle1"><strong>JWT del hotel</strong></Typography>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <TextField value={hotel.accessToken} InputProps={{ readOnly: true }} fullWidth />
+            <Tooltip title="Copiar JWT">
+              <IconButton onClick={() => {
+                navigator.clipboard.writeText(hotel.accessToken);
+                toast.success("JWT copiado");
+              }}>
+                <ContentCopyIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
+        </div>
+      )}
+
+      {hotel.ownerEmail && (
+        <div style={{ marginBottom: "1.5rem" }}>
+          <Typography variant="subtitle1"><strong>Dueño del hotel</strong></Typography>
+          <TextField value={hotel.ownerEmail} InputProps={{ readOnly: true }} fullWidth />
+        </div>
+      )}
+
+      {showUpdateNotice && (
+        <Typography variant="body2" color="warning.main" sx={{ mb: 2 }}>
+          Tienes cambios sin guardar.
+        </Typography>
+      )}
+
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <TextField name="name" label="Nombre" value={hotel.name} onChange={handleChange} fullWidth />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField name="address" label="Dirección" value={hotel.address} onChange={handleChange} fullWidth />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField name="amenities" label="Amenidades" value={hotel.amenities} onChange={handleChange} fullWidth />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField name="image" label="Imagen URL" value={hotel.image} onChange={handleChange} fullWidth />
+        </Grid>
+      </Grid>
+
+      <div style={{ marginTop: "2rem", display: "flex", gap: "1rem" }}>
         <Button variant="contained" onClick={handleUpdate}>Actualizar</Button>
-        <Button variant="outlined" color="error" onClick={handleDelete} style={{ marginLeft: "1rem" }}>
-          Eliminar
-        </Button>
-        <Button variant="text" onClick={() => navigate("/hotel/viewHotel")} style={{ marginLeft: "1rem" }}>
-          Volver
-        </Button>
+        <Button variant="outlined" color="error" onClick={() => setConfirmDelete(true)}>Eliminar</Button>
+        <Button variant="text" onClick={() => navigate("/hotel/viewHotel")}>← Volver</Button>
       </div>
-    </div>
+
+      <Dialog open={confirmDelete} onClose={() => setConfirmDelete(false)}>
+        <DialogTitle>¿Estás seguro de eliminar este hotel?</DialogTitle>
+        <DialogContent>
+          <Typography>Esta acción no se puede deshacer.</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmDelete(false)}>Cancelar</Button>
+          <Button onClick={handleDelete} color="error" variant="contained">Eliminar</Button>
+        </DialogActions>
+      </Dialog>
+    </Paper>
   );
 }

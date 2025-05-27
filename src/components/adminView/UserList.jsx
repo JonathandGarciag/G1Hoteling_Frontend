@@ -1,5 +1,5 @@
 import React from "react";
-import { useUserList } from "../../shared/hooks/useUserList";
+import { useUserList } from "../../shared/hooks/user/useUserList";
 import { useNavigate } from "react-router-dom";
 import { FaUser, FaEnvelope, FaUserEdit, FaTag } from "react-icons/fa";
 import "../../style/User.css";

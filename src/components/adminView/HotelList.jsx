@@ -1,6 +1,7 @@
 import React from "react";
-import { useHotelList } from "../../shared/hooks/useHotelList";
+import { useHotelList } from "../../shared/hooks/hotel/useHotelList";
 import { useNavigate } from "react-router-dom";
+import { Chip } from "@mui/material";
 import "../../style/HotelList.css";
 
 export default function HotelList() {
@@ -65,7 +66,10 @@ export default function HotelList() {
               key={hotel._id}
               className="hotel-card"
               onClick={() => navigate(`/hotel/${hotel._id}`)}
-              style={{ cursor: "pointer" }}
+              style={{
+                cursor: "pointer",
+                borderLeft: hotel.assigned ? "4px solid #2e7d32" : "4px solid transparent"
+              }}
             >
               <img
                 className="hotel-image"
@@ -74,6 +78,9 @@ export default function HotelList() {
               />
               <div className="hotel-content">
                 <h3 className="hotel-name">{hotel.name}</h3>
+                {hotel.assigned && (
+                  <Chip label="Asignado" color="success" size="small" sx={{ mt: 0.5 }} />
+                )}
                 <p className="hotel-address">{hotel.address}</p>
                 <div className="hotel-category">{renderStars(hotel.qualification)}</div>
                 <p className="hotel-amenities">

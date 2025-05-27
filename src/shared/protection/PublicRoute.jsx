@@ -1,4 +1,4 @@
-import { useAuth } from "../hooks/useAuthContext";
+import { useAuth } from "../hooks/auth/useAuthContext";
 import { useEffect } from "react";
 
 const PublicRoute = ({ children }) => {
