@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import {
-  FaHotel, FaBed, FaCalendarAlt, FaHistory, FaUser,
-  FaBook, FaUsers, FaFileInvoice, FaUserShield, FaChartBar, FaCog
+  FaHotel, FaBed, FaCalendarAlt, FaHistory, FaUser, FaCalendar,
+  FaBook, FaUsers, FaFileInvoice, FaUserShield, FaChartBar, FaCog, FaCalendarDay
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useAuth } from "../shared/hooks/auth/useAuthContext";
@@ -50,10 +50,24 @@ const Sidebar = ({ isOpen }) => {
         )}
         {user?.role === "HOTEL_ROLE" && (
           <>
-            <li><FaBook /><span>Reservaciones</span></li>
-            <li><FaUsers /><span>Clientes actuales</span></li>
-            <li><FaBed /><span>Disponibilidad</span></li>
-            <li><FaFileInvoice /><span>Facturación</span></li>
+            <li onClick={() => navigate("/reservaciones")}>
+              <FaBook /> <span>Reservaciones</span>
+            </li>
+            <li onClick={() => navigate(`/room-form`)}>
+              <FaUsers /> <span>Registrar Habitacion</span>
+            </li>
+            <li onClick={() => navigate("/room-list")}>
+              <FaBed /> <span>Disponibilidad</span>
+            </li>
+            <li onClick={() => navigate("bill")}>
+              <FaFileInvoice /> <span>Facturación</span>
+            </li>
+            <li onClick={() => navigate("/event-form")}>
+              <FaCalendar /> <span>Registrar Eventos</span>
+            </li>
+            <li onClick={() => navigate("/events")}>
+              <FaCalendarDay /> <span>Eventos</span>
+            </li>
           </>
         )}
         {user?.role === "ADMIN_ROLE" && (

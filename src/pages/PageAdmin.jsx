@@ -6,6 +6,7 @@ import HotelList from '../components/adminView/HotelList';
 import ProtectedRoute from '../shared/protection/ProtectedRoutes';
 import HotelDetail from '../components/hotel/hotelDetail';
 import HotelManage from '../components/adminView/HotelManage';
+import StatsTop from '../components/adminView/StatsTops'
 
 const PageAdmin = [
   <Route
@@ -52,6 +53,15 @@ const PageAdmin = [
       </ProtectedRoute>
     }
     key="hotelManage"
+  />,
+  <Route
+    path="statistics"
+    element={
+      <ProtectedRoute requiredRole="ADMIN_ROLE">
+          <StatsTop />
+      </ProtectedRoute>
+    }
+    key="statistic"
   />
 ];
 

@@ -1,0 +1,231 @@
+.event-form-container {
+  width: 60vw;
+  max-height: 90vh;
+  margin: auto;
+  padding: 1.5rem;
+  background-color: #faf7eef5;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(13, 42, 56, 0.15);
+  overflow-y: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d6cfbb;
+}
+
+button {
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.submit-button {
+  background-color: #256b67;
+  color: #ffffff;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 4px rgba(37, 107, 103, 0.3);
+  border: 2px solid #1a534f;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.submit-button:hover {
+  background-color: #1d5955;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(37, 107, 103, 0.4);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(37, 107, 103, 0.3);
+}
+
+.submit-button:disabled {
+  background-color: #a0b2b1;
+  border-color: #8a9c9b;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.add-button {
+  background-color: #0eb6da;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(14, 182, 218, 0.3);
+  border: 2px solid #0ca4c4;
+  height: 38px;
+}
+
+.add-button:hover {
+  background-color: #0ca4c4;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(14, 182, 218, 0.4);
+}
+
+.add-button:active {
+  transform: translateY(0);
+}
+
+.remove-tag {
+  color: #0d2a38;
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0 0.2rem;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+}
+
+.remove-tag:hover {
+  color: #0d2a38;
+  background-color: rgba(13, 42, 56, 0.1);
+}
+
+.event-form-container h2 {
+  color: #0d2a38;
+  text-align: center;
+  margin: 0 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #256b67;
+  font-size: 1.3rem;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #12361f;
+  font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #d6cfbb;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  background-color: white;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.servicios-input,
+.schedule-input {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.servicios-input input,
+.schedule-input input {
+  flex: 1;
+}
+
+.servicios-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.servicios-lista li {
+  background-color: #32a8b8;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.schedule-item {
+  background-color: #e8f5e9;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 0.8rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-error {
+  background: none;
+  border: none;
+  color: #c62828;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
+}
+
+@media (max-width: 1200px) {
+  .event-form-container {
+    width: 70vw;
+  }
+}
+
+@media (max-width: 992px) {
+  .event-form-container {
+    width: 80vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .event-form-container {
+    width: 90vw;
+    padding: 1rem;
+  }
+  
+  .servicios-input,
+  .schedule-input {
+    flex-direction: column;
+  }
+  
+  .add-button {
+    width: 100%;
+    padding: 0.5rem;
+  }
+}
+
+@media (max-height: 800px) {
+  .event-form-container {
+    max-height: 85vh;
+  }
+}
+
+@media (max-height: 600px) {
+  .event-form-container {
+    max-height: 80vh;
+  }
+}

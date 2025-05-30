@@ -1,0 +1,129 @@
+/* Estilo de las tarjetas */
+.card-horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 1.25rem;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.4s ease;
+  max-width: 600px;
+  width: 100%;
+  cursor: pointer;
+  gap: 1.25rem;
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.card-horizontal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.card-image-horizontal {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0.75rem;
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+
+.card-horizontal:hover .card-image-horizontal {
+  transform: scale(1.04);
+}
+
+.card-content-horizontal {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.card-address,
+.card-rating,
+.card-amenities {
+  font-size: 0.95rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.toggle-button {
+  background-color: #2563eb;
+  color: white;
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+}
+
+.toggle-button:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.03);
+}
+
+.hotel-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Barra de búsqueda y filtro */
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 600px;
+}
+
+@media (min-width: 768px) {
+  .filter-bar {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.search-input,
+.rating-select {
+  padding: 0.6rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  width: 100%;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.search-input:focus,
+.rating-select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+}
+
+.icon {
+  vertical-align: middle;
+  margin-right: 0.4rem;
+  font-size: 1.2rem;
+}

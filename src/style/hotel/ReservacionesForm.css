@@ -1,0 +1,70 @@
+.reservaciones-container {
+  background-color: #d6cfbb;
+  padding: 2rem;
+  max-width: 800px;
+  margin: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+  color: #12361f;
+}
+
+.reservaciones-title {
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #0d2a38;
+  margin-bottom: 1.5rem;
+}
+
+.reservaciones-message {
+  text-align: center;
+  font-style: italic;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: #256b67; /* Verde éxito */
+}
+
+.reservaciones-message.error {
+  color: #d43f3a; /* Rojo error */
+}
+
+.reservaciones-input {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 1rem;
+  border: 1.5px solid #a59f89;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #12361f;
+  transition: border-color 0.3s ease;
+}
+
+.reservaciones-input:focus {
+  border-color: #256b67;
+  outline: none;
+  box-shadow: 0 0 5px #256b67aa;
+}
+
+.reservaciones-button {
+  width: 100%;
+  background-color: #256b67;
+  color: white;
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reservaciones-button:hover:not(:disabled) {
+  background-color: #0eb6da;
+}
+
+.reservaciones-button:disabled {
+  background-color: #999999;
+  cursor: not-allowed;
+}
