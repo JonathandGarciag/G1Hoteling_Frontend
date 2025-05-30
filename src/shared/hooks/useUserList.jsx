@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllUsers, cambiarRolUsuario } from "../../service/userService";
+import { getAllUsers, updateUserRole } from "../../service/userService";
 import { toast } from "react-toastify";
 
 export const useUserList = () => {
@@ -15,20 +15,9 @@ export const useUserList = () => {
     }
   };
 
-  const handleRolChange = async (id, role) => {
-    const newRole = role === "CLIENT_ROLE" ? "HOTEL_ROLE" : "CLIENT_ROLE";
-    try {
-      await cambiarRolUsuario(id, newRole);
-      toast.success("Rol actualizado");
-      fetchUsers();
-    } catch (error) {
-      toast.error("Error al cambiar rol");
-    }
-  };
-
   useEffect(() => {
     fetchUsers();
   }, []);
 
-  return { users, handleRolChange };
+  return { users };
 };

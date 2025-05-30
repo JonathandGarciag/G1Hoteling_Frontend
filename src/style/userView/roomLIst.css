@@ -1,0 +1,169 @@
+.room-layout {
+  display: flex;
+  gap: 2rem;
+  padding: 2rem 0 2rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  box-sizing: border-box;
+}
+
+.hotel-info {
+  flex: 0 0 400px;
+  background-color: #f9fafb;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  position: sticky;
+  top: 2rem; /* espacio desde arriba cuando haces scroll */
+  align-self: flex-start;
+  max-height: calc(100vh - 4rem); /* altura para no pasar del viewport */
+  overflow-y: auto; /* scroll interno si la info es muy larga */
+}
+
+.hotel-info:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.hotel-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.hotel-description,
+.hotel-location,
+.hotel-qualification,
+.hotel-address,
+.hotel-votes,
+.hotel-amenities {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.hotel-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin: 1rem 0;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.hotel-status {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: #10b981;
+}
+
+.hotel-status::before {
+  content: '● ';
+  font-size: 1rem;
+}
+
+.hotel-status.inactive {
+  color: #ef4444;
+}
+
+.hotel-status.inactive::before {
+  color: #ef4444;
+}
+
+.room-list-container {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 2rem;
+  max-height: calc(100vh - 4rem); /* para que la lista no pase del viewport */
+  overflow-y: auto; /* scroll vertical para las habitaciones */
+  padding-right: 0.5rem; /* para evitar que el scroll tape contenido */
+}
+
+.room-card {
+  background-color: #ffffff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.room-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+}
+
+.room-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.3rem;
+}
+
+.room-info {
+  margin-bottom: 0.2rem;
+  color: #374151;
+}
+
+.room-status {
+  font-weight: 500;
+  color: #2563eb;
+}
+
+.room-amenities {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-top: 0.3rem;
+}
+
+.loading-text,
+.no-rooms-text {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.btn-toggle-rooms,
+.btn-reserve {
+  margin-top: 1rem;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-toggle-rooms {
+  background-color: #2563eb;
+}
+
+.btn-toggle-rooms:hover {
+  background-color: #1e40af;
+}
+
+.btn-reserve {
+  background-color: #10b981;
+}
+
+.btn-reserve:hover {
+  background-color: #0f766e;
+}
+
+.icon {
+  vertical-align: middle;
+  margin-right: 0.35rem;
+  font-size: 1.2rem;
+}
