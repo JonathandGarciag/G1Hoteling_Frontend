@@ -76,13 +76,14 @@ export const registerEventReservation = async (reservationData) => {
 
 export const deleteUserService = async (password) => {
   try {
-    const response = await apiClient.delete("/user/deleteUser", {
+    const response = await apiClient.delete(`/user/deleteUser`, {
       data: { password },
     });
     return { success: true, msg: response.data.msg };
   } catch (error) {
     const msg =
       error.response?.data?.msg || "Error al deshabilitar el usuario";
-    throw new Error(msg); // Lanza el error para que lo capture el hook
+    throw new Error(msg);
   }
 };
+

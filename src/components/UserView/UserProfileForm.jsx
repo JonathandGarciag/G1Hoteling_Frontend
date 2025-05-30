@@ -23,7 +23,7 @@ import { useUserById } from "../../shared/hooks/useUserById";
 import { useUpdateProfile } from "../../shared/hooks/useUpdateProfile";
 import { useDeleteUser } from "../../shared/hooks/useDeleteUser";
 
-const UserProfileForm = () => {
+const UserProfile = () => {
   const [userId, setUserId] = useState(localStorage.getItem("userId"));
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deletePassword, setDeletePassword] = useState("");
@@ -49,10 +49,10 @@ const UserProfileForm = () => {
   } = useUpdateProfile();
 
   const {
-    deleteProfile,
+    deleteUser,
     loading: deleteLoading,
     error: deleteError,
-    successMsg: deleteSuccess,
+    successMessage: deleteSuccess,
   } = useDeleteUser();
 
   const [formData, setFormData] = useState({
@@ -93,9 +93,11 @@ const UserProfileForm = () => {
   const handleDeleteUser = async () => {
     const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar tu perfil? Esta acción no se puede deshacer.");
     if (confirmDelete && deletePassword) {
-      await deleteProfile(userId, { password: deletePassword });
-      localStorage.removeItem("userId");
-      window.location.href = "/";
+      const success = await deleteUser(deletePassword);
+      if (success) {
+        localStorage.removeItem("userId");
+        window.location.href = "/Login";
+      }
     }
   };
 
@@ -300,4 +302,4 @@ const UserProfileForm = () => {
   );
 };
 
-export default UserProfileForm;
+export default UserProfile;

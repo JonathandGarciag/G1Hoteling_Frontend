@@ -7,13 +7,14 @@ export const useDeleteUser = () => {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
 
-  const deleteUser = async (password) => {
+  // ✅ Recibe userId como argumento
+  const deleteUser = async (userId, password) => {
     setLoading(true);
     setError(null);
     setSuccessMessage("");
 
     try {
-      const result = await deleteUserService(password);
+      const result = await deleteUserService(userId, password);
       setSuccessMessage(result.msg);
       return true;
     } catch (err) {
